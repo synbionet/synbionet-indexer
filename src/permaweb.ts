@@ -55,6 +55,8 @@ export class PermaWeb {
         );
         tx.addTag('App-Name', 'SynBioNet');
         tx.addTag('MetaData', 'v1');
+        tx.addTag('DID', asset.did);
+        tx.addTag('AssetAddress', asset.nftAddress);
 
         await this.client.transactions.sign(tx, wallet);
         await this.client.transactions.post(tx);
