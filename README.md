@@ -60,6 +60,16 @@ curl --header "Content-Type: application/json" --request GET localhost:8081/asse
 ```
 This will always return a `200` status code.  If no assets are found, it will return an empty list `[]`
 
+## How it works
+The indexer provides a small REST API to allow a client to store and fetch metadata
+associated with `BioAssets`.  The full metadata is stored on **permanent** decentralized storage (Arweave).  The API server maintains an in-memory database to serve as a cache for the information.  A subset of the metadata is stored and returned from the cache, while the full metadata is returned from Arweave.
+
+Because the entire history of metadata is stored on Arweave, it can be rebuilt from scratch if needed. So the reliance on a central server such as the indexer is primarily for convenience. In otherwords, if the indexer goes offline, the metadata is still available via Arweave. 
+
+Each asset is assigned a globally unique identity using a decentralized identitifer (DID) format. The identifier is calculated from the Keccak256 hash of the contract address and ethereum chain id.  The DID serves as a unique pointer to the actual transaction hash of the content stored on Arweave.
+
+We plan to expand the role of the DID and it's associated document (outlined in the w3 specification) in the future.
+
 ## TODO
 
 - Authentication via Ethereum signatures
