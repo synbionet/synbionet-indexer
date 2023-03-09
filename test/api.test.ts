@@ -85,11 +85,11 @@ async function get(path: string): Promise<request.Response> {
 
 function randomAsset(): AssetMetaData {
     const nft = faker.finance.ethereumAddress();
-    const did = generateDid(nft, 31333);
+    const did = generateDid(nft, 1, 31333);
     return {
         did: did,
         nftAddress: nft,
-        tokenAddress: faker.finance.ethereumAddress(),
+        assetType: 'offerOrProvider',
         name: faker.internet.userName(),
         description: faker.lorem.paragraph(),
         license: "https//a",

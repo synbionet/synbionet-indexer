@@ -20,8 +20,8 @@ export interface AssetMetaData {
     license: string,
     // ethereum address of the nft
     nftAddress: string,
-    // optional, erc-20 address
-    tokenAddress?: string,
+    // asset is provider or offer
+    assetType?: string,
     // url to the endpoint providing the service
     serviceEndpoint: string
 }
@@ -58,14 +58,15 @@ export function createMetaData(
     desc: string,
     license: string,
     nftAddress: string,
+    tokenId: number,
     chainid: number): AssetMetaData {
     return {
-        did: generateDid(nftAddress, chainid),
+        did: generateDid(nftAddress, tokenId, chainid),
         name: name,
         description: desc,
         license: license,
         nftAddress: nftAddress,
-        tokenAddress: '',
+        assetType: '',
         serviceEndpoint: ''
     };
 }
@@ -78,7 +79,7 @@ export function createMetaData(
  * @param {Number} chainId the chain id for the ethereum network
  * @returns {String} the DID
  */
-export function generateDid(nftAddress: string, chainId: number): string {
-    const did_value = ethers.utils.id(nftAddress + chainId);
+export function generateDid(nftAddress: string, tokenId: number, chainId: number): string {
+    const did_value = ethers.utils.id(nftAddress + tokenId + chainId);
     return `${DID_PREFIX}:${did_value}`;
 }
